@@ -5,6 +5,8 @@ from src.ingestion.chunker import chunk_docs
 from src.ingestion.embedder import embed_and_store
 from src.generation.chain import ask
 import tempfile, os
+import os
+os.makedirs("chroma_db", exist_ok=True)
 
 app = FastAPI()
 

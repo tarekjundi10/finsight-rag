@@ -1,5 +1,21 @@
-venv/ 
-.env 
-__pycache__/ 
-*.pyc 
-data/ 
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Env
+.env
+
+# Node
+finsight-ui/node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+dist/
+build/
+
+# Database / embeddings
+chroma_db/

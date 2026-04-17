@@ -3,7 +3,7 @@ import axios from "axios"
 import ReactMarkdown from "react-markdown"
 import { useDropzone } from "react-dropzone"
 
-const API = "http://localhost:8000"
+const API = import.meta.env.VITE_API_URL || "http://localhost:8000"
 
 const ShieldIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">

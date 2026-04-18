@@ -280,7 +280,7 @@ export default function App() {
 
         <div className="px-4 py-4" style={{background:"#fff", borderTop:"1px solid #e5e7eb"}}>
           <div className="flex items-end gap-3 rounded-2xl px-4 py-3"
-            style={{background:"#f8fafc", border:"1.5px solid #e2e8f0"}}>
+            style={{background:"#f8fafc", border:"1.5px solid #000000"}}>
             <textarea value={input} onChange={e => setInput(e.target.value)}
               onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend() } }}
               placeholder="Ask a question about your documents..."
@@ -293,7 +293,7 @@ export default function App() {
               <SendIcon />
             </button>
           </div>
-          <div className="text-center text-xs mt-2" style={{color:"#cbd5e1"}}>
+          <div className="text-center text-xs mt-2" style={{color:"#000000"}}>
             Press Enter to send · Shift+Enter for new line
           </div>
         </div>

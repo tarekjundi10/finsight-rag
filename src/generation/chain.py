@@ -19,14 +19,17 @@ def ask(query, top_k=5):
         temperature=0.1
     )
     answer = response.choices[0].message.content
-    sources = [
-        {
+    seen = set()
+sources = []
+for c in chunks:
+    key = (c["metadata"].get("page"), c["metadata"].get("section"))
+    if key not in seen:
+        seen.add(key)
+        sources.append({
             "company": c["metadata"].get("company", "?"),
             "year": c["metadata"].get("year", "?"),
             "page": c["metadata"].get("page", "?"),
             "section": c["metadata"].get("section", "?"),
             "preview": c["text"][:150]
-        }
-        for c in chunks
-    ]
+        })
     return {"answer": answer, "sources": sources} 

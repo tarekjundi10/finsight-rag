@@ -26,18 +26,15 @@ const FileIcon = () => (
 const SourceCard = ({ source, index }) => {
   const [open, setOpen] = useState(false)
   return (
-    <div
-      onClick={() => setOpen(!open)}
-      style={{border: "0.5px solid rgba(212,175,55,0.25)", background: "rgba(212,175,55,0.04)"}}
-      className="cursor-pointer rounded-lg px-3 py-2 text-xs hover:bg-yellow-900/10 transition-all"
-    >
+    <div onClick={() => setOpen(!open)} className="cursor-pointer rounded-lg px-3 py-2 text-xs transition-all"
+      style={{border:"0.5px solid #e5e7eb", background: open ? "#f9fafb" : "#fff"}}>
       <div className="flex items-center gap-2">
-        <span style={{color:"#8a7a3a", fontFamily:"monospace"}}>0{index + 1}</span>
-        <span style={{color:"#c9a84c"}}>{source.section} · p.{source.page}</span>
-        <span className="ml-auto" style={{color:"#6b5d2e"}}>{open ? "▲" : "▼"}</span>
+        <span style={{color:"#9ca3af", fontFamily:"monospace"}}>0{index + 1}</span>
+        <span style={{color:"#1e3a5f", fontWeight:500}}>{source.section} · p.{source.page}</span>
+        <span className="ml-auto" style={{color:"#9ca3af"}}>{open ? "▲" : "▼"}</span>
       </div>
       {open && (
-        <div className="mt-2 pt-2 leading-relaxed" style={{borderTop:"0.5px solid rgba(212,175,55,0.15)", color:"#9a8040"}}>
+        <div className="mt-2 pt-2 leading-relaxed" style={{borderTop:"0.5px solid #e5e7eb", color:"#6b7280"}}>
           {source.preview}...
         </div>
       )}
@@ -48,8 +45,8 @@ const SourceCard = ({ source, index }) => {
 const Message = ({ msg }) => {
   if (msg.role === "user") return (
     <div className="flex justify-end">
-      <div className="max-w-[70%] text-white rounded-2xl rounded-br-sm px-4 py-3 text-sm leading-relaxed"
-        style={{background:"linear-gradient(135deg, #1a2a4a 0%, #0f1f3d 100%)", border:"0.5px solid #2a4a7a"}}>
+      <div className="max-w-[70%] rounded-2xl rounded-br-sm px-4 py-3 text-sm leading-relaxed"
+        style={{background:"#1e3a5f", color:"#fff"}}>
         {msg.content}
       </div>
     </div>
@@ -58,13 +55,13 @@ const Message = ({ msg }) => {
     <div className="flex flex-col gap-2 max-w-[85%]">
       <div className="flex items-center gap-2">
         <div className="w-6 h-6 rounded-md flex items-center justify-center"
-          style={{background:"rgba(212,175,55,0.1)", border:"0.5px solid rgba(212,175,55,0.3)", color:"#c9a84c"}}>
+          style={{background:"#1e3a5f", color:"#fff"}}>
           <ShieldIcon />
         </div>
-        <span className="text-xs font-medium" style={{color:"#6b5d2e"}}>FinSight</span>
+        <span className="text-xs font-medium" style={{color:"#6b7280"}}>FinSight</span>
       </div>
-      <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm leading-relaxed prose prose-invert prose-sm max-w-none"
-        style={{background:"#0d1520", border:"0.5px solid #1e3050", color:"#c8d8f0"}}>
+      <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm leading-relaxed prose prose-sm max-w-none"
+        style={{background:"#fff", border:"0.5px solid #e5e7eb", color:"#111"}}>
         <ReactMarkdown>{msg.content}</ReactMarkdown>
       </div>
       {msg.sources?.length > 0 && (
@@ -80,16 +77,16 @@ const TypingIndicator = () => (
   <div className="flex flex-col gap-2 max-w-[85%]">
     <div className="flex items-center gap-2">
       <div className="w-6 h-6 rounded-md flex items-center justify-center"
-        style={{background:"rgba(212,175,55,0.1)", border:"0.5px solid rgba(212,175,55,0.3)", color:"#c9a84c"}}>
+        style={{background:"#1e3a5f", color:"#fff"}}>
         <ShieldIcon />
       </div>
-      <span className="text-xs font-medium" style={{color:"#6b5d2e"}}>FinSight</span>
+      <span className="text-xs font-medium" style={{color:"#6b7280"}}>FinSight</span>
     </div>
     <div className="rounded-2xl rounded-tl-sm px-4 py-3 flex gap-1.5 items-center"
-      style={{background:"#0d1520", border:"0.5px solid #1e3050"}}>
+      style={{background:"#fff", border:"0.5px solid #e5e7eb"}}>
       {[0,1,2].map(i => (
         <span key={i} className="w-1.5 h-1.5 rounded-full animate-bounce"
-          style={{background:"#2a4060", animationDelay:`${i*0.15}s`}} />
+          style={{background:"#d1d5db", animationDelay:`${i*0.15}s`}} />
       ))}
     </div>
   </div>
@@ -160,68 +157,56 @@ export default function App() {
     "What is management's guidance?",
   ]
 
-  const inputStyle = {
-    background:"#080f1a",
-    border:"0.5px solid #1e3050",
-    borderRadius:"8px",
-    padding:"7px 12px",
-    fontSize:"12px",
-    color:"#a0b8d8",
-    outline:"none",
-    width:"100%"
-  }
-
-  const selectStyle = {
-    ...inputStyle,
-    cursor:"pointer"
-  }
-
   return (
-    <div className="flex h-screen overflow-hidden" style={{background:"#060d18"}}>
-      <div className="w-72 flex-shrink-0 flex flex-col" style={{background:"#080f1a", borderRight:"0.5px solid #1a2a40"}}>
+    <div className="flex h-screen overflow-hidden" style={{background:"#f5f5f5"}}>
 
-        <div className="p-5 flex items-center gap-3" style={{borderBottom:"0.5px solid #1a2a40"}}>
+      <div className="w-72 flex-shrink-0 flex flex-col" style={{background:"#fff", borderRight:"0.5px solid #e5e7eb"}}>
+
+        <div className="p-5 flex items-center gap-3" style={{borderBottom:"0.5px solid #e5e7eb"}}>
           <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-            style={{background:"linear-gradient(135deg, #c9a84c, #8a6520)", color:"#0a1628"}}>
+            style={{background:"#1e3a5f", color:"#fff"}}>
             <ShieldIcon />
           </div>
           <div>
-            <div className="text-sm font-semibold tracking-tight" style={{color:"#e8d48a"}}>FinSight</div>
-            <div className="text-xs" style={{color:"#4a6080"}}>Financial intelligence</div>
+            <div className="text-sm font-semibold tracking-tight" style={{color:"#111"}}>FinSight</div>
+            <div className="text-xs" style={{color:"#9ca3af"}}>Financial intelligence</div>
           </div>
         </div>
 
-        <div className="p-4 flex flex-col gap-3" style={{borderBottom:"0.5px solid #111d2e"}}>
-          <div className="text-xs uppercase tracking-wider font-medium" style={{color:"#4a6080"}}>Documents</div>
+        <div className="p-4 flex flex-col gap-3" style={{borderBottom:"0.5px solid #f3f4f6"}}>
+          <div className="text-xs uppercase tracking-wider font-medium" style={{color:"#9ca3af"}}>Documents</div>
 
           <div {...getRootProps()} className="rounded-xl p-4 text-center cursor-pointer transition-colors"
-            style={{border:`0.5px dashed ${isDragActive ? "#c9a84c" : "#1e3050"}`, background: isDragActive ? "rgba(201,168,76,0.05)" : "transparent"}}>
+            style={{border:`0.5px dashed ${isDragActive ? "#1e3a5f" : "#d1d5db"}`, background: isDragActive ? "#eff6ff" : "#fafafa"}}>
             <input {...getInputProps()} />
-            <div className="text-xs leading-relaxed" style={{color:"#4a6080"}}>
-              <span style={{color:"#c9a84c"}}>Click to upload</span> or drag PDFs here
+            <div className="text-xs leading-relaxed" style={{color:"#6b7280"}}>
+              <span style={{color:"#1e3a5f", fontWeight:500}}>Click to upload</span> or drag PDFs here
             </div>
           </div>
 
           {docs.map((f, i) => (
-            <div key={i} className="flex items-center gap-2 rounded-lg px-3 py-2" style={{background:"#0d1a2e"}}>
+            <div key={i} className="flex items-center gap-2 rounded-lg px-3 py-2" style={{background:"#f9fafb", border:"0.5px solid #e5e7eb"}}>
               <div className="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0"
-                style={{background:"rgba(201,168,76,0.1)", color:"#c9a84c"}}>
+                style={{background:"#1e3a5f", color:"#fff"}}>
                 <FileIcon />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-xs truncate" style={{color:"#a0b8d8"}}>{f.name}</div>
-                <div className="text-xs" style={{color:"#3a5070"}}>{(f.size/1024).toFixed(0)} KB</div>
+                <div className="text-xs truncate" style={{color:"#111"}}>{f.name}</div>
+                <div className="text-xs" style={{color:"#9ca3af"}}>{(f.size/1024).toFixed(0)} KB</div>
               </div>
-              <span className="text-xs px-1.5 py-0.5 rounded" style={{background:"rgba(201,168,76,0.1)", color:"#c9a84c"}}>PDF</span>
+              <span className="text-xs px-1.5 py-0.5 rounded" style={{background:"#eff6ff", color:"#1e3a5f", fontWeight:500}}>PDF</span>
             </div>
           ))}
 
           <div className="grid grid-cols-2 gap-2">
-            <input value={company} onChange={e => setCompany(e.target.value)} placeholder="Company" style={inputStyle}/>
-            <input value={year} onChange={e => setYear(e.target.value)} placeholder="Year" style={inputStyle}/>
+            <input value={company} onChange={e => setCompany(e.target.value)} placeholder="Company"
+              className="px-3 py-2 text-xs"/>
+            <input value={year} onChange={e => setYear(e.target.value)} placeholder="Year"
+              className="px-3 py-2 text-xs"/>
           </div>
 
-          <select value={docType} onChange={e => { setDocType(e.target.value); setCustomDocType("") }} style={selectStyle}>
+          <select value={docType} onChange={e => { setDocType(e.target.value); setCustomDocType("") }}
+            className="px-3 py-2 text-xs">
             <option>10-K</option>
             <option>10-Q</option>
             <option>Earnings Call</option>
@@ -231,25 +216,23 @@ export default function App() {
 
           {docType === "Other" && (
             <input value={customDocType} onChange={e => setCustomDocType(e.target.value)}
-              placeholder="Specify document type..." style={{...inputStyle, borderColor:"rgba(201,168,76,0.3)"}}/>
+              placeholder="Specify document type..." className="px-3 py-2 text-xs"/>
           )}
 
           <button onClick={handleIngest} disabled={ingesting || !docs.length}
-            className="text-xs font-medium py-2.5 rounded-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-            style={{background:"linear-gradient(135deg, #c9a84c, #8a6520)", color:"#0a1628", fontWeight:"600"}}>
+            className="text-xs font-semibold py-2.5 rounded-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+            style={{background:"#1e3a5f", color:"#fff"}}>
             {ingesting ? "Ingesting..." : "Ingest documents"}
           </button>
-          {ingestStatus && <div className="text-xs text-center" style={{color:"#c9a84c"}}>{ingestStatus}</div>}
+          {ingestStatus && <div className="text-xs text-center" style={{color:"#1e3a5f"}}>{ingestStatus}</div>}
         </div>
 
         <div className="p-4 flex flex-col gap-2 flex-1 overflow-y-auto">
-          <div className="text-xs uppercase tracking-wider font-medium mb-1" style={{color:"#4a6080"}}>Quick questions</div>
+          <div className="text-xs uppercase tracking-wider font-medium mb-1" style={{color:"#9ca3af"}}>Quick questions</div>
           {examples.map((ex, i) => (
             <button key={i} onClick={() => handleSend(ex)}
-              className="text-left text-xs rounded-lg px-3 py-2.5 transition-all leading-relaxed"
-              style={{color:"#4a6080", border:"0.5px solid #1a2a40"}}
-              onMouseEnter={e => { e.target.style.color="#a0b8d8"; e.target.style.borderColor="#2a4060"; e.target.style.background="#0d1a2e" }}
-              onMouseLeave={e => { e.target.style.color="#4a6080"; e.target.style.borderColor="#1a2a40"; e.target.style.background="transparent" }}>
+              className="text-left text-xs rounded-lg px-3 py-2.5 transition-all leading-relaxed hover:bg-gray-50"
+              style={{color:"#374151", border:"0.5px solid #e5e7eb", background:"#fff"}}>
               {ex}
             </button>
           ))}
@@ -257,30 +240,28 @@ export default function App() {
       </div>
 
       <div className="flex-1 flex flex-col min-w-0">
-        <div className="px-6 py-4 flex items-center justify-between" style={{borderBottom:"0.5px solid #111d2e"}}>
-          <div className="flex items-center gap-2">
-            {docs.length > 0 ? (
-              <div className="flex items-center gap-1.5 rounded-full px-3 py-1 text-xs"
-                style={{background:"#0d1a2e", border:"0.5px solid #1e3050", color:"#7090b0"}}>
-                <div className="w-1.5 h-1.5 rounded-full" style={{background:"#c9a84c"}} />
-                {docs.length} document{docs.length > 1 ? "s" : ""} loaded
-              </div>
-            ) : (
-              <div className="text-xs" style={{color:"#2a4060"}}>No documents loaded yet</div>
-            )}
-          </div>
+        <div className="px-6 py-4 flex items-center" style={{background:"#fff", borderBottom:"0.5px solid #e5e7eb"}}>
+          {docs.length > 0 ? (
+            <div className="flex items-center gap-1.5 rounded-full px-3 py-1 text-xs"
+              style={{background:"#f0f9ff", border:"0.5px solid #bae6fd", color:"#0369a1"}}>
+              <div className="w-1.5 h-1.5 rounded-full" style={{background:"#0ea5e9"}} />
+              {docs.length} document{docs.length > 1 ? "s" : ""} loaded
+            </div>
+          ) : (
+            <div className="text-xs" style={{color:"#9ca3af"}}>No documents loaded yet</div>
+          )}
         </div>
 
-        <div className="flex-1 overflow-y-auto px-6 py-5 flex flex-col gap-4">
+        <div className="flex-1 overflow-y-auto px-6 py-5 flex flex-col gap-4" style={{background:"#f9fafb"}}>
           {messages.length === 0 && (
             <div className="flex-1 flex flex-col items-center justify-center gap-4 text-center py-20">
               <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
-                style={{background:"rgba(201,168,76,0.08)", border:"0.5px solid rgba(201,168,76,0.2)", color:"#c9a84c", fontSize:"24px"}}>
+                style={{background:"#fff", border:"0.5px solid #e5e7eb", color:"#1e3a5f"}}>
                 <ShieldIcon />
               </div>
               <div>
-                <div className="text-lg font-medium" style={{color:"#e8d48a"}}>Ask about your documents</div>
-                <div className="text-sm mt-1" style={{color:"#3a5070"}}>Upload a financial report and start asking questions</div>
+                <div className="text-lg font-semibold" style={{color:"#111"}}>Ask about your documents</div>
+                <div className="text-sm mt-1" style={{color:"#9ca3af"}}>Upload a financial report and start asking questions</div>
               </div>
             </div>
           )}
@@ -289,22 +270,22 @@ export default function App() {
           <div ref={bottomRef} />
         </div>
 
-        <div className="px-4 py-4" style={{borderTop:"0.5px solid #111d2e"}}>
-          <div className="flex items-end gap-3 rounded-2xl px-4 py-3 transition-colors"
-            style={{background:"#0d1520", border:"0.5px solid #1e3050"}}>
+        <div className="px-4 py-4" style={{background:"#fff", borderTop:"0.5px solid #e5e7eb"}}>
+          <div className="flex items-end gap-3 rounded-2xl px-4 py-3"
+            style={{background:"#f9fafb", border:"0.5px solid #e5e7eb"}}>
             <textarea value={input} onChange={e => setInput(e.target.value)}
               onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend() } }}
               placeholder="Ask a question about your documents..."
               rows={1}
               className="flex-1 bg-transparent text-sm outline-none resize-none leading-relaxed"
-              style={{color:"#a0b8d8"}}/>
+              style={{color:"#111", border:"none !important"}}/>
             <button onClick={() => handleSend()} disabled={!input.trim() || loading}
               className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all disabled:opacity-30"
-              style={{background:"linear-gradient(135deg, #c9a84c, #8a6520)", color:"#0a1628"}}>
+              style={{background:"#1e3a5f", color:"#fff"}}>
               <SendIcon />
             </button>
           </div>
-          <div className="text-center text-xs mt-2" style={{color:"#1e3050"}}>Press Enter to send · Shift+Enter for new line</div>
+          <div className="text-center text-xs mt-2" style={{color:"#d1d5db"}}>Press Enter to send · Shift+Enter for new line</div>
         </div>
       </div>
     </div>

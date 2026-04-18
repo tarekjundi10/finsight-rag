@@ -256,7 +256,7 @@ export default function App() {
               {docs.length} document{docs.length > 1 ? "s" : ""} loaded
             </div>
           ) : (
-            <div className="text-xs font-medium" style={{color:"#94a3b8"}}>No documents loaded yet</div>
+            <div className="text-xs font-medium" style={{color:"#000000"}}>No documents loaded yet</div>
           )}
         </div>
 
@@ -280,7 +280,7 @@ export default function App() {
 
         <div className="px-4 py-4" style={{background:"#fff", borderTop:"1px solid #e5e7eb"}}>
           <div className="flex items-end gap-3 rounded-2xl px-4 py-3"
-            style={{background:"#f8fafc", border:"1.5px solid #000000"}}>
+            style={{background:"#f8fafc", border:"1.5px solid #1e3a5f"}}>
             <textarea value={input} onChange={e => setInput(e.target.value)}
               onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend() } }}
               placeholder="Ask a question about your documents..."

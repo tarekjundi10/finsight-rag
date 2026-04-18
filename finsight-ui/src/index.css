@@ -3,7 +3,41 @@
 @tailwind utilities;
 
 * { box-sizing: border-box; }
-body { background: #080808; color: #e5e5e5; font-family: 'Inter', sans-serif; margin: 0; }
+
+body {
+  background: #060d18;
+  color: #a0b8d8;
+  font-family: 'Inter', system-ui, sans-serif;
+  margin: 0;
+}
+
+input, select, textarea {
+  background: #080f1a !important;
+  color: #a0b8d8 !important;
+  border: 0.5px solid #1e3050 !important;
+  border-radius: 8px !important;
+  outline: none !important;
+  font-family: inherit;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #2a4060 !important;
+}
+
+select option {
+  background: #080f1a;
+  color: #a0b8d8;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: rgba(201,168,76,0.4) !important;
+}
+
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: #1e3050; border-radius: 2px; }
+
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-4px); }
+}

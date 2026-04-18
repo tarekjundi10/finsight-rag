@@ -97,6 +97,7 @@ export default function App() {
   const [company, setCompany] = useState("")
   const [year, setYear] = useState("")
   const [docType, setDocType] = useState("10-K")
+  const [customDocType, setCustomDocType] = useState("")
   const [docs, setDocs] = useState([])
   const [ingestStatus, setIngestStatus] = useState("")
   const bottomRef = useRef(null)
@@ -113,12 +114,13 @@ export default function App() {
     setIngesting(true)
     setIngestStatus("")
     let total = 0
+    const finalDocType = docType === "Other" ? (customDocType || "Other") : docType
     for (const file of docs) {
       const form = new FormData()
       form.append("file", file)
       form.append("company", company || "unknown")
       form.append("year", year || "unknown")
-      form.append("doc_type", docType)
+      form.append("doc_type", finalDocType)
       try {
         const res = await axios.post(`${API}/ingest`, form)
         total += res.data.chunks
@@ -198,13 +200,25 @@ export default function App() {
             <input value={year} onChange={e => setYear(e.target.value)} placeholder="Year"
               className="bg-[#141414] border border-[#222] rounded-lg px-3 py-2 text-xs text-neutral-300 placeholder-neutral-600 outline-none focus:border-green-800" />
           </div>
-          <select value={docType} onChange={e => setDocType(e.target.value)}
+
+          <select value={docType} onChange={e => { setDocType(e.target.value); setCustomDocType("") }}
             className="bg-[#141414] border border-[#222] rounded-lg px-3 py-2 text-xs text-neutral-300 outline-none focus:border-green-800">
             <option>10-K</option>
             <option>10-Q</option>
             <option>Earnings Call</option>
             <option>Annual Report</option>
+            <option>Other</option>
           </select>
+
+          {docType === "Other" && (
+            <input
+              value={customDocType}
+              onChange={e => setCustomDocType(e.target.value)}
+              placeholder="Specify document type..."
+              className="bg-[#141414] border border-green-900/50 rounded-lg px-3 py-2 text-xs text-neutral-300 placeholder-neutral-600 outline-none focus:border-green-700"
+            />
+          )}
+
           <button onClick={handleIngest} disabled={ingesting || !docs.length}
             className="bg-green-600 hover:bg-green-500 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-medium py-2.5 rounded-lg transition-colors">
             {ingesting ? "Ingesting..." : "Ingest documents"}

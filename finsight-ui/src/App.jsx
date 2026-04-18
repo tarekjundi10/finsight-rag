@@ -28,15 +28,16 @@ const SourceCard = ({ source, index }) => {
   return (
     <div
       onClick={() => setOpen(!open)}
-      className="cursor-pointer rounded-lg border border-green-900/40 bg-green-950/20 px-3 py-2 text-xs text-green-400 hover:bg-green-950/40 transition-all"
+      style={{border: "0.5px solid rgba(212,175,55,0.25)", background: "rgba(212,175,55,0.04)"}}
+      className="cursor-pointer rounded-lg px-3 py-2 text-xs hover:bg-yellow-900/10 transition-all"
     >
       <div className="flex items-center gap-2">
-        <span className="text-green-700 font-mono">0{index + 1}</span>
-        <span>{source.section} · p.{source.page}</span>
-        <span className="ml-auto text-green-700">{open ? "▲" : "▼"}</span>
+        <span style={{color:"#8a7a3a", fontFamily:"monospace"}}>0{index + 1}</span>
+        <span style={{color:"#c9a84c"}}>{source.section} · p.{source.page}</span>
+        <span className="ml-auto" style={{color:"#6b5d2e"}}>{open ? "▲" : "▼"}</span>
       </div>
       {open && (
-        <div className="mt-2 pt-2 border-t border-green-900/30 text-green-600 leading-relaxed">
+        <div className="mt-2 pt-2 leading-relaxed" style={{borderTop:"0.5px solid rgba(212,175,55,0.15)", color:"#9a8040"}}>
           {source.preview}...
         </div>
       )}
@@ -47,7 +48,8 @@ const SourceCard = ({ source, index }) => {
 const Message = ({ msg }) => {
   if (msg.role === "user") return (
     <div className="flex justify-end">
-      <div className="max-w-[70%] bg-green-600 text-white rounded-2xl rounded-br-sm px-4 py-3 text-sm leading-relaxed">
+      <div className="max-w-[70%] text-white rounded-2xl rounded-br-sm px-4 py-3 text-sm leading-relaxed"
+        style={{background:"linear-gradient(135deg, #1a2a4a 0%, #0f1f3d 100%)", border:"0.5px solid #2a4a7a"}}>
         {msg.content}
       </div>
     </div>
@@ -55,12 +57,14 @@ const Message = ({ msg }) => {
   return (
     <div className="flex flex-col gap-2 max-w-[85%]">
       <div className="flex items-center gap-2">
-        <div className="w-6 h-6 rounded-md bg-[#111] border border-[#222] flex items-center justify-center text-green-500">
+        <div className="w-6 h-6 rounded-md flex items-center justify-center"
+          style={{background:"rgba(212,175,55,0.1)", border:"0.5px solid rgba(212,175,55,0.3)", color:"#c9a84c"}}>
           <ShieldIcon />
         </div>
-        <span className="text-xs text-neutral-600 font-medium">FinSight</span>
+        <span className="text-xs font-medium" style={{color:"#6b5d2e"}}>FinSight</span>
       </div>
-      <div className="bg-[#111] border border-[#1e1e1e] rounded-2xl rounded-tl-sm px-4 py-3 text-sm text-neutral-300 leading-relaxed prose prose-invert prose-sm max-w-none">
+      <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-sm leading-relaxed prose prose-invert prose-sm max-w-none"
+        style={{background:"#0d1520", border:"0.5px solid #1e3050", color:"#c8d8f0"}}>
         <ReactMarkdown>{msg.content}</ReactMarkdown>
       </div>
       {msg.sources?.length > 0 && (
@@ -75,15 +79,17 @@ const Message = ({ msg }) => {
 const TypingIndicator = () => (
   <div className="flex flex-col gap-2 max-w-[85%]">
     <div className="flex items-center gap-2">
-      <div className="w-6 h-6 rounded-md bg-[#111] border border-[#222] flex items-center justify-center text-green-500">
+      <div className="w-6 h-6 rounded-md flex items-center justify-center"
+        style={{background:"rgba(212,175,55,0.1)", border:"0.5px solid rgba(212,175,55,0.3)", color:"#c9a84c"}}>
         <ShieldIcon />
       </div>
-      <span className="text-xs text-neutral-600 font-medium">FinSight</span>
+      <span className="text-xs font-medium" style={{color:"#6b5d2e"}}>FinSight</span>
     </div>
-    <div className="bg-[#111] border border-[#1e1e1e] rounded-2xl rounded-tl-sm px-4 py-3 flex gap-1.5 items-center">
+    <div className="rounded-2xl rounded-tl-sm px-4 py-3 flex gap-1.5 items-center"
+      style={{background:"#0d1520", border:"0.5px solid #1e3050"}}>
       {[0,1,2].map(i => (
-        <span key={i} className="w-1.5 h-1.5 bg-neutral-600 rounded-full animate-bounce"
-          style={{ animationDelay: `${i * 0.15}s` }} />
+        <span key={i} className="w-1.5 h-1.5 rounded-full animate-bounce"
+          style={{background:"#2a4060", animationDelay:`${i*0.15}s`}} />
       ))}
     </div>
   </div>
@@ -154,55 +160,68 @@ export default function App() {
     "What is management's guidance?",
   ]
 
+  const inputStyle = {
+    background:"#080f1a",
+    border:"0.5px solid #1e3050",
+    borderRadius:"8px",
+    padding:"7px 12px",
+    fontSize:"12px",
+    color:"#a0b8d8",
+    outline:"none",
+    width:"100%"
+  }
+
+  const selectStyle = {
+    ...inputStyle,
+    cursor:"pointer"
+  }
+
   return (
-    <div className="flex h-screen overflow-hidden bg-[#080808]">
-      <div className="w-72 flex-shrink-0 bg-[#0c0c0c] border-r border-[#1a1a1a] flex flex-col">
-        <div className="p-5 border-b border-[#1a1a1a] flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-green-600 flex items-center justify-center text-white">
+    <div className="flex h-screen overflow-hidden" style={{background:"#060d18"}}>
+      <div className="w-72 flex-shrink-0 flex flex-col" style={{background:"#080f1a", borderRight:"0.5px solid #1a2a40"}}>
+
+        <div className="p-5 flex items-center gap-3" style={{borderBottom:"0.5px solid #1a2a40"}}>
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center"
+            style={{background:"linear-gradient(135deg, #c9a84c, #8a6520)", color:"#0a1628"}}>
             <ShieldIcon />
           </div>
           <div>
-            <div className="text-sm font-semibold text-white tracking-tight">FinSight</div>
-            <div className="text-xs text-neutral-600">Financial intelligence</div>
+            <div className="text-sm font-semibold tracking-tight" style={{color:"#e8d48a"}}>FinSight</div>
+            <div className="text-xs" style={{color:"#4a6080"}}>Financial intelligence</div>
           </div>
         </div>
 
-        <div className="p-4 border-b border-[#151515] flex flex-col gap-3">
-          <div className="text-xs text-neutral-600 uppercase tracking-wider font-medium">Documents</div>
-          <div
-            {...getRootProps()}
-            className={`border border-dashed rounded-xl p-4 text-center cursor-pointer transition-colors ${
-              isDragActive ? "border-green-500 bg-green-950/20" : "border-[#2a2a2a] hover:border-[#3a3a3a]"
-            }`}
-          >
+        <div className="p-4 flex flex-col gap-3" style={{borderBottom:"0.5px solid #111d2e"}}>
+          <div className="text-xs uppercase tracking-wider font-medium" style={{color:"#4a6080"}}>Documents</div>
+
+          <div {...getRootProps()} className="rounded-xl p-4 text-center cursor-pointer transition-colors"
+            style={{border:`0.5px dashed ${isDragActive ? "#c9a84c" : "#1e3050"}`, background: isDragActive ? "rgba(201,168,76,0.05)" : "transparent"}}>
             <input {...getInputProps()} />
-            <div className="text-xs text-neutral-500 leading-relaxed">
-              <span className="text-green-500">Click to upload</span> or drag PDFs here
+            <div className="text-xs leading-relaxed" style={{color:"#4a6080"}}>
+              <span style={{color:"#c9a84c"}}>Click to upload</span> or drag PDFs here
             </div>
           </div>
 
           {docs.map((f, i) => (
-            <div key={i} className="flex items-center gap-2 bg-[#141414] rounded-lg px-3 py-2">
-              <div className="w-6 h-6 rounded-md bg-green-950/40 text-green-500 flex items-center justify-center flex-shrink-0">
+            <div key={i} className="flex items-center gap-2 rounded-lg px-3 py-2" style={{background:"#0d1a2e"}}>
+              <div className="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0"
+                style={{background:"rgba(201,168,76,0.1)", color:"#c9a84c"}}>
                 <FileIcon />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-xs text-neutral-300 truncate">{f.name}</div>
-                <div className="text-xs text-neutral-600">{(f.size/1024).toFixed(0)} KB</div>
+                <div className="text-xs truncate" style={{color:"#a0b8d8"}}>{f.name}</div>
+                <div className="text-xs" style={{color:"#3a5070"}}>{(f.size/1024).toFixed(0)} KB</div>
               </div>
-              <span className="text-xs px-1.5 py-0.5 bg-green-950/40 text-green-500 rounded">PDF</span>
+              <span className="text-xs px-1.5 py-0.5 rounded" style={{background:"rgba(201,168,76,0.1)", color:"#c9a84c"}}>PDF</span>
             </div>
           ))}
 
           <div className="grid grid-cols-2 gap-2">
-            <input value={company} onChange={e => setCompany(e.target.value)} placeholder="Company"
-              className="bg-[#141414] border border-[#222] rounded-lg px-3 py-2 text-xs text-neutral-300 placeholder-neutral-600 outline-none focus:border-green-800" />
-            <input value={year} onChange={e => setYear(e.target.value)} placeholder="Year"
-              className="bg-[#141414] border border-[#222] rounded-lg px-3 py-2 text-xs text-neutral-300 placeholder-neutral-600 outline-none focus:border-green-800" />
+            <input value={company} onChange={e => setCompany(e.target.value)} placeholder="Company" style={inputStyle}/>
+            <input value={year} onChange={e => setYear(e.target.value)} placeholder="Year" style={inputStyle}/>
           </div>
 
-          <select value={docType} onChange={e => { setDocType(e.target.value); setCustomDocType("") }}
-            className="bg-[#141414] border border-[#222] rounded-lg px-3 py-2 text-xs text-neutral-300 outline-none focus:border-green-800">
+          <select value={docType} onChange={e => { setDocType(e.target.value); setCustomDocType("") }} style={selectStyle}>
             <option>10-K</option>
             <option>10-Q</option>
             <option>Earnings Call</option>
@@ -211,26 +230,26 @@ export default function App() {
           </select>
 
           {docType === "Other" && (
-            <input
-              value={customDocType}
-              onChange={e => setCustomDocType(e.target.value)}
-              placeholder="Specify document type..."
-              className="bg-[#141414] border border-green-900/50 rounded-lg px-3 py-2 text-xs text-neutral-300 placeholder-neutral-600 outline-none focus:border-green-700"
-            />
+            <input value={customDocType} onChange={e => setCustomDocType(e.target.value)}
+              placeholder="Specify document type..." style={{...inputStyle, borderColor:"rgba(201,168,76,0.3)"}}/>
           )}
 
           <button onClick={handleIngest} disabled={ingesting || !docs.length}
-            className="bg-green-600 hover:bg-green-500 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-medium py-2.5 rounded-lg transition-colors">
+            className="text-xs font-medium py-2.5 rounded-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+            style={{background:"linear-gradient(135deg, #c9a84c, #8a6520)", color:"#0a1628", fontWeight:"600"}}>
             {ingesting ? "Ingesting..." : "Ingest documents"}
           </button>
-          {ingestStatus && <div className="text-xs text-green-500 text-center">{ingestStatus}</div>}
+          {ingestStatus && <div className="text-xs text-center" style={{color:"#c9a84c"}}>{ingestStatus}</div>}
         </div>
 
         <div className="p-4 flex flex-col gap-2 flex-1 overflow-y-auto">
-          <div className="text-xs text-neutral-600 uppercase tracking-wider font-medium mb-1">Quick questions</div>
+          <div className="text-xs uppercase tracking-wider font-medium mb-1" style={{color:"#4a6080"}}>Quick questions</div>
           {examples.map((ex, i) => (
             <button key={i} onClick={() => handleSend(ex)}
-              className="text-left text-xs text-neutral-500 hover:text-neutral-300 border border-[#1e1e1e] hover:border-[#2a2a2a] rounded-lg px-3 py-2.5 transition-all hover:bg-[#141414] leading-relaxed">
+              className="text-left text-xs rounded-lg px-3 py-2.5 transition-all leading-relaxed"
+              style={{color:"#4a6080", border:"0.5px solid #1a2a40"}}
+              onMouseEnter={e => { e.target.style.color="#a0b8d8"; e.target.style.borderColor="#2a4060"; e.target.style.background="#0d1a2e" }}
+              onMouseLeave={e => { e.target.style.color="#4a6080"; e.target.style.borderColor="#1a2a40"; e.target.style.background="transparent" }}>
               {ex}
             </button>
           ))}
@@ -238,15 +257,16 @@ export default function App() {
       </div>
 
       <div className="flex-1 flex flex-col min-w-0">
-        <div className="px-6 py-4 border-b border-[#151515] flex items-center justify-between">
+        <div className="px-6 py-4 flex items-center justify-between" style={{borderBottom:"0.5px solid #111d2e"}}>
           <div className="flex items-center gap-2">
             {docs.length > 0 ? (
-              <div className="flex items-center gap-1.5 bg-[#111] border border-[#1e1e1e] rounded-full px-3 py-1 text-xs text-neutral-400">
-                <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+              <div className="flex items-center gap-1.5 rounded-full px-3 py-1 text-xs"
+                style={{background:"#0d1a2e", border:"0.5px solid #1e3050", color:"#7090b0"}}>
+                <div className="w-1.5 h-1.5 rounded-full" style={{background:"#c9a84c"}} />
                 {docs.length} document{docs.length > 1 ? "s" : ""} loaded
               </div>
             ) : (
-              <div className="text-xs text-neutral-600">No documents loaded yet</div>
+              <div className="text-xs" style={{color:"#2a4060"}}>No documents loaded yet</div>
             )}
           </div>
         </div>
@@ -254,12 +274,13 @@ export default function App() {
         <div className="flex-1 overflow-y-auto px-6 py-5 flex flex-col gap-4">
           {messages.length === 0 && (
             <div className="flex-1 flex flex-col items-center justify-center gap-4 text-center py-20">
-              <div className="w-12 h-12 rounded-2xl bg-green-600/10 border border-green-900/30 flex items-center justify-center text-green-500 text-xl">
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
+                style={{background:"rgba(201,168,76,0.08)", border:"0.5px solid rgba(201,168,76,0.2)", color:"#c9a84c", fontSize:"24px"}}>
                 <ShieldIcon />
               </div>
               <div>
-                <div className="text-lg font-medium text-neutral-200">Ask about your documents</div>
-                <div className="text-sm text-neutral-600 mt-1">Upload a financial report and start asking questions</div>
+                <div className="text-lg font-medium" style={{color:"#e8d48a"}}>Ask about your documents</div>
+                <div className="text-sm mt-1" style={{color:"#3a5070"}}>Upload a financial report and start asking questions</div>
               </div>
             </div>
           )}
@@ -268,22 +289,22 @@ export default function App() {
           <div ref={bottomRef} />
         </div>
 
-        <div className="px-4 py-4 border-t border-[#151515]">
-          <div className="flex items-end gap-3 bg-[#111] border border-[#1e1e1e] rounded-2xl px-4 py-3 focus-within:border-green-900/60 transition-colors">
-            <textarea
-              value={input}
-              onChange={e => setInput(e.target.value)}
+        <div className="px-4 py-4" style={{borderTop:"0.5px solid #111d2e"}}>
+          <div className="flex items-end gap-3 rounded-2xl px-4 py-3 transition-colors"
+            style={{background:"#0d1520", border:"0.5px solid #1e3050"}}>
+            <textarea value={input} onChange={e => setInput(e.target.value)}
               onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend() } }}
               placeholder="Ask a question about your documents..."
               rows={1}
-              className="flex-1 bg-transparent text-sm text-neutral-300 placeholder-neutral-600 outline-none resize-none leading-relaxed"
-            />
+              className="flex-1 bg-transparent text-sm outline-none resize-none leading-relaxed"
+              style={{color:"#a0b8d8"}}/>
             <button onClick={() => handleSend()} disabled={!input.trim() || loading}
-              className="w-8 h-8 bg-green-600 hover:bg-green-500 disabled:opacity-30 rounded-xl flex items-center justify-center text-white transition-colors flex-shrink-0">
+              className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all disabled:opacity-30"
+              style={{background:"linear-gradient(135deg, #c9a84c, #8a6520)", color:"#0a1628"}}>
               <SendIcon />
             </button>
           </div>
-          <div className="text-center text-xs text-neutral-700 mt-2">Press Enter to send · Shift+Enter for new line</div>
+          <div className="text-center text-xs mt-2" style={{color:"#1e3050"}}>Press Enter to send · Shift+Enter for new line</div>
         </div>
       </div>
     </div>

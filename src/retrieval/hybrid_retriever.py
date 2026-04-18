@@ -61,11 +61,11 @@ def search(query, top_k=5):
         )[:top_k]]
 
         query_vector = get_query_embedding(query)
-        dense_results = qdrant.search(
+        dense_results = qdrant.query_points(
             collection_name=COLLECTION,
-            query_vector=query_vector,
+            query=query_vector,
             limit=top_k
-        )
+        ).points
         dense_ids = [str(r.id) for r in dense_results]
 
         fused = reciprocal_rank_fusion(dense_ids, bm25_ranked_ids)

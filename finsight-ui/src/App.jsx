@@ -5,12 +5,6 @@ import { useDropzone } from "react-dropzone"
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:8000"
 
-const Logo = () => (
-  <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-    <path d="M8 1L2 4v4c0 3.5 2.5 6 6 7 3.5-1 6-3.5 6-7V4L8 1z"/>
-  </svg>
-)
-
 const SendIcon = () => (
   <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
     <path d="M14 2L2 7l5 2 2 5 5-12z"/>
@@ -24,25 +18,32 @@ const FileIcon = () => (
 )
 
 const ChevronIcon = ({ open }) => (
-  <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+  <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5">
     <path d={open ? "M4 10l4-4 4 4" : "M4 6l4 4 4-4"}/>
+  </svg>
+)
+
+const BarChartIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c8a96e" strokeWidth="2" strokeLinecap="round">
+    <rect x="2" y="12" width="4" height="10" rx="1"/>
+    <rect x="9" y="7" width="4" height="15" rx="1"/>
+    <rect x="16" y="3" width="4" height="19" rx="1"/>
+    <path d="M2 3l5 4 5-3 5 3"/>
   </svg>
 )
 
 const SourceCard = ({ source, index }) => {
   const [open, setOpen] = useState(false)
   return (
-    <div onClick={() => setOpen(!open)}
-      className="cursor-pointer transition-all"
-      style={{borderRadius:"6px", border:"1px solid #e8eaed", background: open ? "#f8f9fa" : "#fff", marginTop:"4px"}}>
-      <div className="flex items-center gap-2 px-3 py-2">
-        <span style={{fontSize:"10px", color:"#9aa0a6", fontFamily:"monospace", minWidth:"16px"}}>#{index+1}</span>
-        <span style={{fontSize:"11px", color:"#1a1a2e", fontWeight:600, flex:1}}>{source.section}</span>
-        <span style={{fontSize:"11px", color:"#5f6368"}}>p.{source.page}</span>
-        <span style={{color:"#9aa0a6", marginLeft:"4px"}}><ChevronIcon open={open}/></span>
+    <div onClick={() => setOpen(!open)} style={{cursor:"pointer", borderRadius:"8px", border:"1px solid #2a2f32", background: open ? "#111314" : "transparent", marginTop:"4px", transition:"all .15s"}}>
+      <div style={{display:"flex", alignItems:"center", gap:"8px", padding:"7px 10px"}}>
+        <span style={{fontSize:"10px", color:"#6a5a30", fontFamily:"'JetBrains Mono',monospace", minWidth:"20px"}}>#{index+1}</span>
+        <span style={{fontSize:"11px", color:"#e8d9b0", fontWeight:600, flex:1}}>{source.section}</span>
+        <span style={{fontSize:"11px", color:"#6a6f72"}}>p.{source.page}</span>
+        <span style={{color:"#4a4f52"}}><ChevronIcon open={open}/></span>
       </div>
       {open && (
-        <div style={{padding:"0 12px 10px", fontSize:"11px", color:"#5f6368", lineHeight:1.6, borderTop:"1px solid #e8eaed", paddingTop:"8px", marginTop:"0"}}>
+        <div style={{padding:"0 10px 10px", fontSize:"11px", color:"#8a8f92", lineHeight:1.65, borderTop:"1px solid #1c1f20", paddingTop:"8px", marginTop:"0"}}>
           {source.preview}...
         </div>
       )}
@@ -52,26 +53,26 @@ const SourceCard = ({ source, index }) => {
 
 const Message = ({ msg }) => {
   if (msg.role === "user") return (
-    <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"12px"}}>
-      <div style={{maxWidth:"72%", background:"#1a1a2e", color:"#fff", borderRadius:"12px 12px 3px 12px", padding:"10px 14px", fontSize:"13px", lineHeight:1.6}}>
+    <div style={{display:"flex", justifyContent:"flex-end", marginBottom:"16px"}}>
+      <div style={{maxWidth:"68%", background:"linear-gradient(135deg,#1e1c0f,#2a2610)", border:"1px solid #3a3218", color:"#f0ead6", borderRadius:"16px 16px 4px 16px", padding:"11px 16px", fontSize:"13px", lineHeight:1.7}}>
         {msg.content}
       </div>
     </div>
   )
   return (
-    <div style={{display:"flex", flexDirection:"column", gap:"6px", maxWidth:"88%", marginBottom:"16px"}}>
-      <div style={{display:"flex", alignItems:"center", gap:"6px"}}>
-        <div style={{width:"20px", height:"20px", borderRadius:"5px", background:"#1a1a2e", color:"#fff", display:"flex", alignItems:"center", justifyContent:"center"}}>
-          <Logo/>
+    <div style={{display:"flex", flexDirection:"column", gap:"6px", maxWidth:"86%", marginBottom:"20px"}}>
+      <div style={{display:"flex", alignItems:"center", gap:"8px"}}>
+        <div style={{width:"22px", height:"22px", borderRadius:"6px", background:"linear-gradient(135deg,#c8a96e,#8b6914)", display:"flex", alignItems:"center", justifyContent:"center"}}>
+          <BarChartIcon/>
         </div>
-        <span style={{fontSize:"11px", fontWeight:700, color:"#1a1a2e", letterSpacing:"0.02em"}}>FINSIGHT</span>
+        <span style={{fontSize:"10px", fontWeight:700, color:"#c8a96e", letterSpacing:"0.1em"}}>FINSIGHT</span>
       </div>
-      <div style={{background:"#fff", border:"1px solid #e8eaed", borderRadius:"3px 12px 12px 12px", padding:"12px 14px", fontSize:"13px", color:"#1a1a2e", lineHeight:1.7}}>
+      <div style={{background:"#111314", border:"1px solid #1c1f20", borderRadius:"4px 16px 16px 16px", padding:"14px 16px", fontSize:"13px", color:"#d4cfc6", lineHeight:1.78}}>
         <ReactMarkdown>{msg.content}</ReactMarkdown>
       </div>
       {msg.sources?.length > 0 && (
-        <div style={{marginTop:"2px"}}>
-          <div style={{fontSize:"10px", fontWeight:700, color:"#9aa0a6", letterSpacing:"0.06em", marginBottom:"4px"}}>SOURCES</div>
+        <div style={{marginTop:"4px"}}>
+          <div style={{fontSize:"9px", fontWeight:700, color:"#3a3f42", letterSpacing:"0.1em", marginBottom:"4px"}}>SOURCES</div>
           {msg.sources.map((s, i) => <SourceCard key={i} source={s} index={i}/>)}
         </div>
       )}
@@ -80,16 +81,16 @@ const Message = ({ msg }) => {
 }
 
 const Typing = () => (
-  <div style={{display:"flex", flexDirection:"column", gap:"6px", maxWidth:"88%", marginBottom:"16px"}}>
-    <div style={{display:"flex", alignItems:"center", gap:"6px"}}>
-      <div style={{width:"20px", height:"20px", borderRadius:"5px", background:"#1a1a2e", color:"#fff", display:"flex", alignItems:"center", justifyContent:"center"}}>
-        <Logo/>
+  <div style={{display:"flex", flexDirection:"column", gap:"6px", maxWidth:"86%", marginBottom:"20px"}}>
+    <div style={{display:"flex", alignItems:"center", gap:"8px"}}>
+      <div style={{width:"22px", height:"22px", borderRadius:"6px", background:"linear-gradient(135deg,#c8a96e,#8b6914)", display:"flex", alignItems:"center", justifyContent:"center"}}>
+        <BarChartIcon/>
       </div>
-      <span style={{fontSize:"11px", fontWeight:700, color:"#1a1a2e", letterSpacing:"0.02em"}}>FINSIGHT</span>
+      <span style={{fontSize:"10px", fontWeight:700, color:"#c8a96e", letterSpacing:"0.1em"}}>FINSIGHT</span>
     </div>
-    <div style={{background:"#fff", border:"1px solid #e8eaed", borderRadius:"3px 12px 12px 12px", padding:"12px 14px", display:"flex", gap:"5px", alignItems:"center"}}>
+    <div style={{background:"#111314", border:"1px solid #1c1f20", borderRadius:"4px 16px 16px 16px", padding:"14px 16px", display:"flex", gap:"5px", alignItems:"center"}}>
       {[0,1,2].map(i => (
-        <span key={i} style={{width:"5px", height:"5px", borderRadius:"50%", background:"#d1d5db", display:"inline-block", animation:"bounce 0.9s infinite", animationDelay:`${i*0.15}s`}}/>
+        <span key={i} style={{width:"5px", height:"5px", borderRadius:"50%", background:"#3a3f42", display:"inline-block", animation:"typingBounce 0.9s infinite", animationDelay:`${i*0.15}s`}}/>
       ))}
     </div>
   </div>
@@ -151,146 +152,128 @@ export default function App() {
     setLoading(false)
   }
 
-  const fieldStyle = {
-    background:"#f8f9fa", border:"1px solid #e8eaed", borderRadius:"6px",
-    padding:"7px 10px", fontSize:"12px", color:"#1a1a2e", outline:"none",
-    width:"100%", fontFamily:"inherit"
-  }
+  const F = { background:"#0d0f10", border:"1px solid #2a2f32", borderRadius:"8px", padding:"8px 11px", fontSize:"12px", color:"#e8e3da", outline:"none", width:"100%", fontFamily:"'DM Sans',sans-serif" }
 
-  const examples = [
-    "What was total revenue?",
-    "Key risk factors?",
-    "Operating income YoY?",
-    "Management guidance?",
-  ]
+  const examples = ["Revenue by segment?", "Key risk factors?", "Operating income YoY?", "Management guidance?"]
 
   return (
-    <div style={{display:"flex", height:"100vh", overflow:"hidden", background:"#f1f3f4", fontFamily:"-apple-system, BlinkMacSystemFont, 'Inter', sans-serif"}}>
+    <div style={{display:"flex", height:"100vh", overflow:"hidden", background:"#08090a", fontFamily:"'DM Sans',system-ui,sans-serif"}}>
       <style>{`
-        @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-4px)} }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        ::placeholder { color: #9aa0a6 !important; }
-        ::-webkit-scrollbar { width: 3px; }
-        ::-webkit-scrollbar-thumb { background: #e8eaed; border-radius: 2px; }
-        textarea { resize: none; }
-        p { margin: 0 0 8px; } p:last-child { margin-bottom: 0; }
-        ul, ol { padding-left: 18px; margin: 6px 0; }
-        li { margin-bottom: 3px; }
-        strong { font-weight: 600; color: #1a1a2e; }
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+        @keyframes typingBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+        *{box-sizing:border-box;margin:0;padding:0}
+        ::-webkit-scrollbar{width:3px}
+        ::-webkit-scrollbar-thumb{background:#1c1f20;border-radius:2px}
+        ::placeholder{color:#3a3f42 !important}
+        select option{background:#0d0f10;color:#e8e3da}
+        p{margin:0 0 8px} p:last-child{margin:0}
+        ul,ol{padding-left:18px;margin:6px 0}
+        li{margin-bottom:4px}
+        strong{color:#f0ead6;font-weight:600}
       `}</style>
 
-      {/* Sidebar */}
-      <div style={{width:"260px", flexShrink:0, background:"#fff", borderRight:"1px solid #e8eaed", display:"flex", flexDirection:"column"}}>
+      <div style={{width:"270px", flexShrink:0, background:"#0d0f10", borderRight:"1px solid #1c1f20", display:"flex", flexDirection:"column"}}>
 
-        {/* Logo */}
-        <div style={{padding:"16px", borderBottom:"1px solid #e8eaed", display:"flex", alignItems:"center", gap:"10px"}}>
-          <div style={{width:"30px", height:"30px", borderRadius:"8px", background:"#1a1a2e", color:"#fff", display:"flex", alignItems:"center", justifyContent:"center"}}>
-            <Logo/>
+        <div style={{padding:"20px", borderBottom:"1px solid #1c1f20", display:"flex", alignItems:"center", gap:"12px"}}>
+          <div style={{width:"36px", height:"36px", borderRadius:"10px", background:"#0a0a0a", border:"1px solid #2a2f32", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0}}>
+            <BarChartIcon/>
           </div>
           <div>
-            <div style={{fontSize:"13px", fontWeight:700, color:"#1a1a2e", letterSpacing:"-0.3px"}}>FinSight</div>
-            <div style={{fontSize:"11px", color:"#5f6368", fontWeight:500}}>Financial intelligence</div>
+            <div style={{fontFamily:"'DM Serif Display',serif", fontSize:"17px", color:"#f0ead6", letterSpacing:"-0.3px", lineHeight:1.1}}>FinSight</div>
+            <div style={{fontSize:"10px", color:"#4a4f52", letterSpacing:"0.1em", textTransform:"uppercase", fontWeight:500, marginTop:"2px"}}>Intelligence Platform</div>
           </div>
         </div>
 
-        {/* Upload section */}
-        <div style={{padding:"14px", borderBottom:"1px solid #f1f3f4"}}>
-          <div style={{fontSize:"10px", fontWeight:700, color:"#1a1a2e", letterSpacing:"0.07em", marginBottom:"10px"}}>DOCUMENTS</div>
+        <div style={{padding:"16px", borderBottom:"1px solid #1c1f20"}}>
+          <div style={{fontSize:"9px", fontWeight:700, color:"#3a3f42", letterSpacing:"0.14em", textTransform:"uppercase", marginBottom:"12px"}}>Documents</div>
 
-          <div {...getRootProps()} style={{border:`1.5px dashed ${isDragActive ? "#1a1a2e" : "#d1d5db"}`, borderRadius:"8px", padding:"14px 12px", textAlign:"center", cursor:"pointer", background: isDragActive ? "#f0f4ff" : "#fafafa", transition:"all .15s"}}>
+          <div {...getRootProps()} style={{border:`1px dashed ${isDragActive ? "#c8a96e" : "#2a2f32"}`, borderRadius:"10px", padding:"16px", textAlign:"center", cursor:"pointer", background: isDragActive ? "#0f0e09" : "#0a0c0d", transition:"all .2s"}}>
             <input {...getInputProps()}/>
-            <div style={{fontSize:"11px", color:"#5f6368", lineHeight:1.5}}>
-              <span style={{color:"#1a1a2e", fontWeight:700}}>Click to upload</span> or drop PDF here
+            <div style={{fontSize:"11px", color:"#4a4f52", lineHeight:1.6}}>
+              <span style={{color:"#c8a96e", fontWeight:600}}>Click to upload</span> or drop PDF<br/>Annual · 10-K · Earnings · Any
             </div>
           </div>
 
           {docs.map((f, i) => (
-            <div key={i} style={{display:"flex", alignItems:"center", gap:"8px", background:"#f8f9fa", border:"1px solid #e8eaed", borderRadius:"6px", padding:"7px 10px", marginTop:"8px"}}>
-              <div style={{width:"22px", height:"22px", borderRadius:"5px", background:"#1a1a2e", color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0}}>
+            <div key={i} style={{display:"flex", alignItems:"center", gap:"8px", background:"#0a0c0d", border:"1px solid #1c1f20", borderRadius:"8px", padding:"8px 10px", marginTop:"8px"}}>
+              <div style={{width:"24px", height:"24px", borderRadius:"6px", background:"#1c1a0f", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, color:"#c8a96e"}}>
                 <FileIcon/>
               </div>
               <div style={{flex:1, minWidth:0}}>
-                <div style={{fontSize:"11px", fontWeight:600, color:"#1a1a2e", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap"}}>{f.name}</div>
-                <div style={{fontSize:"10px", color:"#9aa0a6"}}>{(f.size/1024).toFixed(0)} KB</div>
+                <div style={{fontSize:"11px", fontWeight:500, color:"#e8e3da", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap"}}>{f.name}</div>
+                <div style={{fontSize:"10px", color:"#3a3f42"}}>{(f.size/1024).toFixed(0)} KB</div>
               </div>
-              <span style={{fontSize:"10px", fontWeight:700, color:"#1a1a2e", background:"#e8eaed", borderRadius:"4px", padding:"2px 6px"}}>PDF</span>
+              <span style={{fontSize:"9px", fontWeight:700, color:"#c8a96e", background:"#1c1a0f", borderRadius:"4px", padding:"2px 6px"}}>PDF</span>
             </div>
           ))}
 
           <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:"6px", marginTop:"8px"}}>
-            <input value={company} onChange={e => setCompany(e.target.value)} placeholder="Company" style={fieldStyle}/>
-            <input value={year} onChange={e => setYear(e.target.value)} placeholder="Year" style={fieldStyle}/>
+            <input value={company} onChange={e => setCompany(e.target.value)} placeholder="Company" style={F}/>
+            <input value={year} onChange={e => setYear(e.target.value)} placeholder="Year" style={F}/>
           </div>
-
-          <select value={docType} onChange={e => { setDocType(e.target.value); setCustomDocType("") }}
-            style={{...fieldStyle, marginTop:"6px", cursor:"pointer"}}>
+          <select value={docType} onChange={e => { setDocType(e.target.value); setCustomDocType("") }} style={{...F, marginTop:"6px", cursor:"pointer"}}>
             <option>10-K</option><option>10-Q</option>
             <option>Earnings Call</option><option>Annual Report</option><option>Other</option>
           </select>
-
           {docType === "Other" && (
-            <input value={customDocType} onChange={e => setCustomDocType(e.target.value)}
-              placeholder="Specify type..." style={{...fieldStyle, marginTop:"6px", borderColor:"#1a1a2e"}}/>
+            <input value={customDocType} onChange={e => setCustomDocType(e.target.value)} placeholder="Specify type..." style={{...F, marginTop:"6px", borderColor:"#c8a96e"}}/>
           )}
-
           <button onClick={handleIngest} disabled={ingesting || !docs.length}
-            style={{width:"100%", marginTop:"8px", padding:"8px", borderRadius:"6px", border:"none", background: ingesting || !docs.length ? "#e8eaed" : "#1a1a2e", color: ingesting || !docs.length ? "#9aa0a6" : "#fff", fontSize:"12px", fontWeight:700, cursor: docs.length ? "pointer" : "not-allowed", letterSpacing:"0.02em", fontFamily:"inherit", transition:"all .15s"}}>
-            {ingesting ? "Indexing..." : "Index documents"}
+            style={{width:"100%", marginTop:"8px", padding:"9px", borderRadius:"8px", border:"none", background: docs.length && !ingesting ? "linear-gradient(135deg,#c8a96e,#8b6914)" : "#1c1f20", color: docs.length && !ingesting ? "#0d0b06" : "#3a3f42", fontSize:"11px", fontWeight:700, cursor: docs.length ? "pointer" : "not-allowed", letterSpacing:"0.04em", fontFamily:"inherit", transition:"all .2s"}}>
+            {ingesting ? "Indexing..." : "Index document"}
           </button>
-
           {ingestStatus && (
-            <div style={{marginTop:"6px", fontSize:"11px", color:"#1a1a2e", fontWeight:600, textAlign:"center", padding:"5px", background:"#f0fdf4", borderRadius:"5px", border:"1px solid #bbf7d0"}}>
+            <div style={{marginTop:"6px", fontSize:"10px", color:"#c8a96e", textAlign:"center", padding:"5px 8px", background:"#0f0e09", borderRadius:"6px", border:"1px solid #2a2208", fontWeight:500}}>
               {ingestStatus}
             </div>
           )}
         </div>
 
-        {/* Quick questions */}
-        <div style={{padding:"14px", flex:1, overflowY:"auto"}}>
-          <div style={{fontSize:"10px", fontWeight:700, color:"#1a1a2e", letterSpacing:"0.07em", marginBottom:"8px"}}>QUICK QUESTIONS</div>
+        <div style={{padding:"16px", flex:1, overflowY:"auto"}}>
+          <div style={{fontSize:"9px", fontWeight:700, color:"#3a3f42", letterSpacing:"0.14em", textTransform:"uppercase", marginBottom:"10px"}}>Suggested queries</div>
           {examples.map((ex, i) => (
             <button key={i} onClick={() => handleSend(ex)}
-              style={{display:"block", width:"100%", textAlign:"left", padding:"7px 10px", marginBottom:"4px", borderRadius:"6px", border:"1px solid #e8eaed", background:"transparent", fontSize:"12px", color:"#3c4043", cursor:"pointer", fontFamily:"inherit", fontWeight:500, transition:"all .1s"}}
-              onMouseEnter={e => { e.currentTarget.style.background="#f8f9fa"; e.currentTarget.style.color="#1a1a2e"; e.currentTarget.style.borderColor="#1a1a2e" }}
-              onMouseLeave={e => { e.currentTarget.style.background="transparent"; e.currentTarget.style.color="#3c4043"; e.currentTarget.style.borderColor="#e8eaed" }}>
+              style={{display:"block", width:"100%", textAlign:"left", padding:"8px 10px", marginBottom:"4px", borderRadius:"7px", border:"1px solid #1c1f20", background:"transparent", fontSize:"11px", color:"#6a6f72", cursor:"pointer", fontFamily:"inherit", fontWeight:400, transition:"all .15s", lineHeight:1.4}}
+              onMouseEnter={e => { e.currentTarget.style.borderColor="#2a2f32"; e.currentTarget.style.color="#c8c4bc"; e.currentTarget.style.background="#111314" }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor="#1c1f20"; e.currentTarget.style.color="#6a6f72"; e.currentTarget.style.background="transparent" }}>
               {ex}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Main */}
       <div style={{flex:1, display:"flex", flexDirection:"column", minWidth:0}}>
-
-        {/* Topbar */}
-        <div style={{padding:"12px 20px", background:"#fff", borderBottom:"1px solid #e8eaed", display:"flex", alignItems:"center", gap:"8px"}}>
+        <div style={{padding:"12px 24px", background:"#0a0c0d", borderBottom:"1px solid #1c1f20", display:"flex", alignItems:"center", justifyContent:"space-between"}}>
           {docs.length > 0 ? (
-            <div style={{display:"flex", alignItems:"center", gap:"6px", background:"#f0fdf4", border:"1px solid #bbf7d0", borderRadius:"20px", padding:"4px 10px", fontSize:"11px", fontWeight:600, color:"#166534"}}>
-              <div style={{width:"6px", height:"6px", borderRadius:"50%", background:"#16a34a"}}/>
+            <div style={{display:"flex", alignItems:"center", gap:"7px", background:"#0f0e09", border:"1px solid #2a2208", borderRadius:"20px", padding:"5px 12px", fontSize:"11px", color:"#c8a96e", fontWeight:500}}>
+              <div style={{width:"6px", height:"6px", borderRadius:"50%", background:"#c8a96e", animation:"pulse 2s infinite"}}/>
               {docs.length} doc{docs.length > 1 ? "s" : ""} indexed
             </div>
           ) : (
-            <div style={{fontSize:"12px", color:"#9aa0a6", fontWeight:500}}>No documents indexed</div>
+            <div style={{fontSize:"11px", color:"#3a3f42"}}>No documents indexed yet</div>
           )}
+          <div style={{display:"flex", gap:"6px"}}>
+            <button onClick={() => setMessages([])} style={{padding:"5px 12px", borderRadius:"6px", border:"1px solid #1c1f20", background:"transparent", fontSize:"10px", color:"#4a4f52", cursor:"pointer", fontFamily:"inherit"}}>Clear chat</button>
+          </div>
         </div>
 
-        {/* Messages */}
-        <div style={{flex:1, overflowY:"auto", padding:"24px 28px", display:"flex", flexDirection:"column"}}>
+        <div style={{flex:1, overflowY:"auto", padding:"28px 32px 16px", display:"flex", flexDirection:"column"}}>
           {messages.length === 0 && (
-            <div style={{flex:1, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", textAlign:"center", padding:"60px 20px"}}>
-              <div style={{width:"48px", height:"48px", borderRadius:"12px", background:"#1a1a2e", color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", marginBottom:"16px"}}>
-                <Logo/>
+            <div style={{flex:1, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", textAlign:"center", padding:"40px 20px"}}>
+              <div style={{width:"52px", height:"52px", borderRadius:"14px", background:"#0d0f10", border:"1px solid #2a2f32", display:"flex", alignItems:"center", justifyContent:"center", marginBottom:"20px"}}>
+                <BarChartIcon/>
               </div>
-              <div style={{fontSize:"18px", fontWeight:700, color:"#1a1a2e", marginBottom:"6px"}}>Ask about your documents</div>
-              <div style={{fontSize:"13px", color:"#9aa0a6", maxWidth:"320px", lineHeight:1.6}}>Index a financial report using the sidebar, then ask any business question</div>
-              <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:"8px", marginTop:"24px", maxWidth:"400px", width:"100%"}}>
-                {["Revenue breakdown", "Risk factors", "Operating income", "Guidance"].map((s, i) => (
-                  <div key={i} onClick={() => handleSend(s)}
-                    style={{padding:"10px 14px", borderRadius:"8px", border:"1px solid #e8eaed", background:"#fff", fontSize:"12px", color:"#3c4043", cursor:"pointer", fontWeight:500, textAlign:"left", transition:"all .1s"}}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor="#1a1a2e"; e.currentTarget.style.color="#1a1a2e" }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor="#e8eaed"; e.currentTarget.style.color="#3c4043" }}>
+              <div style={{fontFamily:"'DM Serif Display',serif", fontSize:"24px", color:"#f0ead6", letterSpacing:"-0.5px", marginBottom:"8px"}}>Ask about your documents</div>
+              <div style={{fontSize:"12px", color:"#4a4f52", maxWidth:"300px", lineHeight:1.7, marginBottom:"28px"}}>Index any financial report and ask business questions. Every answer is cited from your documents.</div>
+              <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:"8px", maxWidth:"360px", width:"100%"}}>
+                {["Revenue breakdown", "Risk factors", "Operating income", "Guidance & outlook"].map((s, i) => (
+                  <button key={i} onClick={() => handleSend(s)}
+                    style={{padding:"10px 14px", borderRadius:"9px", border:"1px solid #1c1f20", background:"#0d0f10", fontSize:"11px", color:"#6a6f72", cursor:"pointer", fontFamily:"inherit", textAlign:"left", transition:"all .15s", lineHeight:1.4}}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor="#2a2208"; e.currentTarget.style.color="#c8a96e"; e.currentTarget.style.background="#0f0e09" }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor="#1c1f20"; e.currentTarget.style.color="#6a6f72"; e.currentTarget.style.background="#0d0f10" }}>
                     {s}
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
@@ -300,22 +283,24 @@ export default function App() {
           <div ref={bottomRef}/>
         </div>
 
-        {/* Input */}
-        <div style={{padding:"12px 20px 16px", background:"#fff", borderTop:"1px solid #e8eaed"}}>
-          <div style={{display:"flex", alignItems:"flex-end", gap:"8px", background:"#f8f9fa", border:"1.5px solid #e8eaed", borderRadius:"10px", padding:"10px 12px", transition:"border-color .15s"}}
-            onFocus={e => e.currentTarget.style.borderColor="#1a1a2e"}
-            onBlur={e => e.currentTarget.style.borderColor="#e8eaed"}>
-            <textarea value={input} onChange={e => setInput(e.target.value)}
+        <div style={{padding:"12px 24px 18px", background:"#0a0c0d", borderTop:"1px solid #1c1f20"}}>
+          <div style={{display:"flex", alignItems:"flex-end", gap:"10px", background:"#111314", border:"1px solid #2a2f32", borderRadius:"14px", padding:"12px 14px", transition:"border-color .2s"}}
+            onFocus={e => e.currentTarget.style.borderColor="#3a3218"}
+            onBlur={e => e.currentTarget.style.borderColor="#2a2f32"}>
+            <textarea
+              value={input}
+              onChange={e => setInput(e.target.value)}
               onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend() }}}
-              placeholder="Ask a question about your documents..."
+              placeholder="Ask anything about your indexed documents..."
               rows={1}
-              style={{flex:1, background:"transparent", border:"none", outline:"none", fontSize:"13px", color:"#1a1a2e", lineHeight:1.6, fontFamily:"inherit"}}/>
+              style={{flex:1, background:"transparent", border:"none", outline:"none", fontSize:"13px", color:"#f0ead6", fontFamily:"'DM Sans',sans-serif", resize:"none", lineHeight:1.6}}
+            />
             <button onClick={() => handleSend()} disabled={!input.trim() || loading}
-              style={{width:"30px", height:"30px", borderRadius:"7px", border:"none", background: input.trim() && !loading ? "#1a1a2e" : "#e8eaed", color: input.trim() && !loading ? "#fff" : "#9aa0a6", display:"flex", alignItems:"center", justifyContent:"center", cursor: input.trim() ? "pointer" : "not-allowed", flexShrink:0, transition:"all .15s"}}>
+              style={{width:"32px", height:"32px", borderRadius:"8px", border:"none", background: input.trim() && !loading ? "linear-gradient(135deg,#c8a96e,#8b6914)" : "#1c1f20", color: input.trim() && !loading ? "#0d0b06" : "#3a3f42", display:"flex", alignItems:"center", justifyContent:"center", cursor: input.trim() ? "pointer" : "not-allowed", flexShrink:0, transition:"all .2s"}}>
               <SendIcon/>
             </button>
           </div>
-          <div style={{textAlign:"center", fontSize:"11px", color:"#d1d5db", marginTop:"6px"}}>Enter to send · Shift+Enter for new line</div>
+          <div style={{textAlign:"center", fontSize:"10px", color:"#2a2f32", marginTop:"8px", letterSpacing:"0.03em"}}>Enter to send · Shift+Enter for new line · All answers cited from your documents</div>
         </div>
       </div>
     </div>

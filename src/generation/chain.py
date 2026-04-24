@@ -5,7 +5,14 @@ from src.generation.prompt import build_prompt
 import os
 
 load_dotenv()
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+try:
+    import streamlit as st
+    api_key = st.secrets["OPENAI_API_KEY"]
+except:
+    api_key = os.getenv("OPENAI_API_KEY")
+
+client = OpenAI(api_key=api_key)
 
 def ask(query, top_k=5):
     chunks = search(query, top_k=top_k)
@@ -19,17 +26,19 @@ def ask(query, top_k=5):
         temperature=0.1
     )
     answer = response.choices[0].message.content
+
     seen = set()
-sources = []
-for c in chunks:
-    key = (c["metadata"].get("page"), c["metadata"].get("section"))
-    if key not in seen:
-        seen.add(key)
-        sources.append({
-            "company": c["metadata"].get("company", "?"),
-            "year": c["metadata"].get("year", "?"),
-            "page": c["metadata"].get("page", "?"),
-            "section": c["metadata"].get("section", "?"),
-            "preview": c["text"][:150]
-        })
-    return {"answer": answer, "sources": sources} 
+    sources = []
+    for c in chunks:
+        key = (c["metadata"].get("page"), c["metadata"].get("section"))
+        if key not in seen:
+            seen.add(key)
+            sources.append({
+                "company": c["metadata"].get("company", "?"),
+                "year": c["metadata"].get("year", "?"),
+                "page": c["metadata"].get("page", "?"),
+                "section": c["metadata"].get("section", "?"),
+                "preview": c["text"][:150]
+            })
+
+    return {"answer": answer, "sources": sources}

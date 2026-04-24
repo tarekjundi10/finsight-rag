@@ -18,4 +18,4 @@ def build_prompt(query, chunks):
     return [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": f"Context:\n{context}\n\nQuestion: {query}"}
-    ] 
+    ]

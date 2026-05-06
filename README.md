@@ -3,7 +3,7 @@
 AI-powered financial intelligence system for analyzing earnings reports and 10-K filings using Retrieval-Augmented Generation (RAG).
 
 Live Demo: https://finsight-rag.vercel.app  
----
+
 
 ## Overview
 
@@ -11,7 +11,7 @@ FinSight RAG is a full-stack application that allows users to upload financial d
 
 The project is designed to go beyond basic RAG implementations by focusing on structured financial data and real-world document analysis.
 
----
+
 
 ## Features
 
@@ -22,7 +22,6 @@ The project is designed to go beyond basic RAG implementations by focusing on st
 - React frontend with modern UI
 - Modular architecture for scalability
 
----
 
 ## Architecture
 
@@ -31,7 +30,6 @@ Frontend (React + Vite)
 → Embedding and Retrieval (ChromaDB)  
 → Language Model (OpenAI)
 
----
 
 ## Tech Stack
 
@@ -47,7 +45,7 @@ Frontend:
 - Tailwind CSS
 - Axios
 
----
+
 
 ## Project Structure
 
@@ -60,7 +58,6 @@ Frontend:
     ├── .env
     └── README.md
 
----
 
 ## Setup and Installation
 
@@ -69,7 +66,6 @@ Frontend:
     git clone https://github.com/tarekjundi10/finsight-rag.git
     cd finsight-rag
 
----
 
 ### Backend Setup
 
@@ -91,7 +87,6 @@ http://127.0.0.1:8000
 Docs:
 http://127.0.0.1:8000/docs
 
----
 
 ### Frontend Setup
 
@@ -102,7 +97,6 @@ http://127.0.0.1:8000/docs
 Frontend:
 http://localhost:5173
 
----
 
 ## Usage
 
@@ -115,7 +109,6 @@ Example queries:
 - What are the key risk factors?
 - How did operating income change year over year?
 
----
 
 ## Known Limitations
 
@@ -123,7 +116,6 @@ Example queries:
 - Performance depends on document size
 - No authentication system implemented
 
----
 
 ## Future Improvements
 
@@ -132,8 +124,6 @@ Example queries:
 - Authentication system
 - Docker deployment
 - Performance optimization
-
----
 
 ## Project Value
 
